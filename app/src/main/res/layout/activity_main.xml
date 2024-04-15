@@ -52,6 +52,28 @@
                 android:layout_weight="4.5"
                 android:background="@android:color/transparent"
                 android:hint="Enter City Name"
+                android:padding="5dp"
+                app:hintTextColor="@color/white"
+                android:textColorHint="@color/white"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/isEdtCity"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:background="@android:color/transparent"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
 
         </LinearLayout>
     </RelativeLayout>
