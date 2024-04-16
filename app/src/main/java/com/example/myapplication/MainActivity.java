@@ -165,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
                 weatherRVModalArrayList.clear();
                 try {
                     String temperature = response.getJSONObject("current").getString("temp_c");
+                    temperatureTV.setText(temperature + "°C");
+                    int isDay = response.getJSONObject("current").getInt("is_day");
+                    String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
