@@ -7,11 +7,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.Manifest;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,12 +92,24 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             List<Address> addresses = gcd.getFromLocation(latitude,longitude,10);
-            
+            for (Address adr : addresses){
+                if(adr !=null){
+                    String city = adr.getLocality();
+                    if(city!=null && !city.equals("")){
+                        cityName = city;
+                    }
+                    else{
+                        Log.d("TAG","CITY NOT FOUND");
+                        Toast.makeText(this,"User City Not Found",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
 
         }catch(IOException e){
             e.printStackTrace();
 
         }
+        return cityName;
     }
     private void getWeatherInfo(String cityName){
         String url = "https://api.weatherapi.com/v1/forecast.json?key=4353eb74a0e04d9ebf8102626241004&q=" + cityName + "&days=1&aqi=yes&alerts=yes";
