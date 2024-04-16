@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -172,6 +173,24 @@ public class MainActivity extends AppCompatActivity {
                     String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
                     Picasso.get().load("http:".concat(conditionIcon)).into(iconIV);
                     conditionTV.setText(condition);
+                    if(isDay==1){
+                        Picasso.get().load("https://images.unsplash.com/photo-1589390202741-35c929668400?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fG1vcm5pbmd8ZW58MHx8MHx8fDA%3D").into(backIV);
+                    }else{
+                        Picasso.get().load("https://images.unsplash.com/photo-1532767153582-b1a0e5145009?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D").into(backIV);
+                    }
+                    JSONObject forecastObj = response.getJSONObject("forecast");
+                    JSONObject forcast0 = forecastObj.getJSONArray("forecastday").getJSONObject(0);
+                    JSONArray hourArray = forcast0.getJSONArray("hour");
+                    for (int i =0;i<hourArray.length();i++){
+                        JSONObject hourObj = hourArray.getJSONObject(i);
+                        String time = hourObj.getString("time");
+                        String img = hourObj.getJSONObject("condition").getString("icon");
+                        String wind = hourObj.getString("wind_kph");
+                        String temper = hourObj.getString("temp_c");
+                        weatherRVModalArrayList.add(new WeatherRVModal(time,temper,img,wind));
+
+                    }
+                    weatherRVAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
